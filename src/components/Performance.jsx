@@ -29,15 +29,13 @@ const Performance = () => {
             }
         );
 
-        if (isMobile) return;
-
         const tl = gsap.timeline({
             defaults: { ease: "power1.inOut", duration: 2, overwrite: "auto" },
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: "top bottom",
-                end: "center center",
-                scrub: 1,
+                end: "bottom center",
+                scrub: 2.5,
                 invalidateOnRefresh: true,
             },
         });
@@ -47,9 +45,19 @@ const Performance = () => {
             if (pos.id === 'p5') return;
 
             const toVars = {};
-            if (pos.left !== undefined) toVars.left = `${pos.left}%`;
-            if (pos.right !== undefined) toVars.right = `${pos.right}%`;
-            if (pos.bottom !== undefined) toVars.bottom = `${pos.bottom}%`;
+
+            // On mobile, spread them out differently so they don't pile up
+            if (isMobile) {
+                // Adjust base positions slightly for mobile view
+                if (pos.left !== undefined) toVars.left = `${pos.left + (pos.left > 10 ? -10 : 10)}%`;
+                if (pos.right !== undefined) toVars.right = `${pos.right + (pos.right > 10 ? -10 : 10)}%`;
+                if (pos.bottom !== undefined) toVars.bottom = `${pos.bottom}%`;
+            } else {
+                // Desktop positions
+                if (pos.left !== undefined) toVars.left = `${pos.left}%`;
+                if (pos.right !== undefined) toVars.right = `${pos.right}%`;
+                if (pos.bottom !== undefined) toVars.bottom = `${pos.bottom}%`;
+            }
             if (pos.transform !== undefined) toVars.transform = pos.transform;
 
             tl.to(`.${pos.id}`, toVars, 0);

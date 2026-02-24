@@ -38,7 +38,7 @@ const ModelScroll = () => {
             scrollTrigger: {
                 trigger: '#f-canvas',
                 start: 'top top',
-                end: 'bottom top',
+                end: '+=150%', // use relative end
                 scrub: 1,
                 pin: true,
             }
@@ -49,7 +49,7 @@ const ModelScroll = () => {
             scrollTrigger: {
                 trigger: '#f-canvas',
                 start: 'top center',
-                end: 'bottom top',
+                end: '+=150%', // use relative end
                 scrub: 1,
             }
         });
@@ -91,7 +91,7 @@ const ModelScroll = () => {
 
 const Features = () => {
     return (
-        <section id="features">
+        <section id="features" className="min-h-[150vh] relative">
             <h2>See it all in a new light.</h2>
 
             <Canvas id="f-canvas" camera={{}}>
@@ -100,9 +100,9 @@ const Features = () => {
                 <ModelScroll />
 
             </Canvas>
-            <div className="absolute inset-0">
+            <div className="absolute top-[10%] left-0 w-full h-[150vh]">
                 {features.map((feature, index) => (
-                    <div className={clsx('box', `box${index + 1}`, feature.styles)}>
+                    <div className={clsx('box', `box${index + 1}`, feature.styles)} key={feature.id}>
                         <img src={feature.icon} alt={feature.highlight} />
                         <p>
                             <span className="text-white">{feature.highlight}</span>

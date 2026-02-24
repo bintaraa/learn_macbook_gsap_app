@@ -58,6 +58,7 @@ const ModelSwitcher = ({ scale, isMobile }) => {
     }, [scale])
 
     const controlsConfig = {
+        global: true,
         snap: true,
         speed: 1,
         zoom: 1,
